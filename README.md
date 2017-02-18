@@ -1,9 +1,9 @@
 ###URL
-https://carlosgg.shinyapps.io/orlando-police-calls-map/
+https://carlosgg.shinyapps.io/la-crimes-map/
 
 ### Motivation
 
-I wanted an Orange County equivalent of [this Hillsborough County website](http://gis.hcso.tampa.fl.us/PublicGIS/CrimeMapping/), i.e., 
+I wanted an equivalent of [this Hillsborough County website](http://gis.hcso.tampa.fl.us/PublicGIS/CrimeMapping/), i.e., 
 I wanted to be able to enter an O.C. address or landmark and get a plot of criminal activity within a given radius of that address/landmark.
 
 ### Technologies
@@ -123,3 +123,7 @@ The table depicts a 3-way contingency table. The variables (category, day of the
 18. Eduardo Ariño de la Rubia and Sheila Doshi. ***A Huge Debate: R vs. Python for Data Science*** [Video] Retrieved from https://blog.dominodatalab.com/video-huge-debate-r-vs-python-data-science/
 
 19. EliteDataScience. ***R vs Python for Data Science: Summary of Modern Advances*** Retrieved from https://elitedatascience.com/r-vs-python-for-data-science
+
+20. LostLin and Tommy. ***switch() statement usage*** Retrieved from http://stackoverflow.com/questions/7825501/switch-statement-usage
+
+21. kay. ***Embedding Image in Shiny App*** Retrieved from http://stackoverflow.com/questions/21996887/embedding-image-in-shiny-app
