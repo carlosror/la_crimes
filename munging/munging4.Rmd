@@ -1,0 +1,24 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Reducing file size and splitting, by year, into several files
+
+```{r}
+library(readr)
+library(magrittr)
+start <- Sys.time()
+la_crimes <- read_csv("la_crimes_2017_0216.csv")
+Sys.time() - start
+```
+
+Write the files
+```{r}
+start <- Sys.time()
+for(year in c(2004:2015)) {
+  crimes <- la_crimes[la_crimes$year == as.character(year),]
+  write_csv(as.data.frame(crimes), paste("crimes_", as.character(year), ".csv", sep=""))
+}
+Sys.time() - start
+```

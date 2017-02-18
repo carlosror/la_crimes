@@ -1,0 +1,65 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Imputes most frequent missing locations values
+
+Altogether, ~8,000 records out of ~139,000 missing records are imputed.
+
+Reading data file created using munging1.Rmd (not munging2.Rmd)
+```{r, echo=FALSE}
+library(readr)
+library(magrittr)
+start <- Sys.time()
+la_crimes <- read_csv("la_crimes.csv")
+Sys.time() - start
+```
+
+Loading unmapped dataset created using munging2.Rmd
+```{r}
+unmapped_locations <- read_csv("unmapped_locations_2017_0216.csv")
+```
+
+Do a little manipulation of the coordinates column to get latitude and longtitude
+```{r}
+unmapped_locations$latitude <- sub(",.*", "", unmapped_locations$coordinates)
+unmapped_locations$latitude <- as.numeric(unmapped_locations$latitude)
+unmapped_locations$longitude <- sub(".* ", "", unmapped_locations$coordinates)
+unmapped_locations$longitude <- as.numeric(unmapped_locations$longitude)
+```
+
+Do the imputation. This is the part that takes a LONG time due to the size of the files.
+Takes about half an hour for 300 records.
+```{r}
+impute_lat <- function(this_location) {
+  # Impute latitude
+  # You have to use GLOBAL assignment: "<<-"!!
+  # http://stackoverflow.com/questions/1236620/global-variables-in-r
+  
+  la_crimes[la_crimes$address == this_location & !is.na(la_crimes$address),]$latitude <<- unmapped_locations[unmapped_locations$address == this_location,]$latitude
+}
+
+impute_long <- function(a_location) {
+  # Impute longitude
+  # You have to use GLOBAL assignment: "<<-"!!
+  # http://stackoverflow.com/questions/1236620/global-variables-in-r
+  
+  # Longitude to be imputed
+  #imputed_long <- unmapped_locations[unmapped_locations$Incident_Location == a_location,]$longitude
+
+  la_crimes[la_crimes$address == a_location & !is.na(la_crimes$address),]$longitude <<- unmapped_locations[unmapped_locations$address == a_location,]$longitude
+}
+
+start <- Sys.time()
+# Suppress the output using invisible()
+# http://stackoverflow.com/questions/2723034/suppress-one-commands-output-in-r
+sapply(unmapped_locations$address[1:300], FUN = impute_lat) %>% invisible()
+sapply(unmapped_locations$address[1:300], FUN = impute_long) %>% invisible()
+Sys.time() - start
+```
+
+Write dataset with imputed values to file:
+```{r}
+write_csv(as.data.frame(la_crimes), "la_crimes_2017_0216.csv")
+```

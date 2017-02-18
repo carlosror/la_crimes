@@ -1,0 +1,79 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Loading libraries we plan on using
+```{r}
+library(chron) # for dealing with chronological objects
+library(magrittr) # pipe operator
+library(plyr) # rename
+library(readr)# read_csv(), ~3x faster than read.csv()
+```
+
+
+```{r}
+start <- Sys.time()
+la_crimes <- read_csv("LA_SHERIFF_CRIMES_FROM_2004_TO_2015.csv")
+Sys.time() - start
+```
+
+Remove some columns we will not be using
+```{r}
+la_crimes$CRIME_CATEGORY_NUMBER <- NULL
+la_crimes$STATISTICAL_CODE <- NULL
+la_crimes$STATISTICAL_CODE <- NULL
+la_crimes$VICTIM_COUNT <- NULL
+la_crimes$ZIP <- NULL
+la_crimes$REPORTING_DISTRICT <- NULL
+la_crimes$STATION_IDENTIFIER <- NULL
+la_crimes$STATION_NAME <- NULL
+la_crimes$GEO_CRIME_LOCATION <- NULL
+
+#Combine STREET, CITY, and STATE columns into one, then delete the individual columns
+la_crimes$address <- paste(la_crimes$STREET, ", ", la_crimes$CITY, ", ", la_crimes$STATE, sep = "")
+la_crimes$STREET <- NULL
+la_crimes$CITY <- NULL
+la_crimes$STATE <- NULL
+
+#Rename a few columns with shorter names and so that they match names
+#I had used before.
+la_crimes <- rename(la_crimes, replace = c("CRIME_CATEGORY_DESCRIPTION" = "categories"))
+la_crimes <- rename(la_crimes, replace = c("STATISTICAL_CODE_DESCRIPTION" = "description"))
+la_crimes <- rename(la_crimes, replace = c("CRIME_YEAR" = "year"))
+la_crimes <- rename(la_crimes, replace = c("CRIME_IDENTIFIER" = "identifier"))
+la_crimes <- rename(la_crimes, replace = c("CRIME_DATE" = "date"))
+la_crimes <- rename(la_crimes, replace = c("LATITUDE" = "latitude"))
+la_crimes <- rename(la_crimes, replace = c("LONGITUDE" = "longitude"))
+la_crimes <- rename(la_crimes, replace = c("GANG_RELATED" = "gang_related"))
+```
+
+Dealing with times and dates:
+
+```{r}
+start <- Sys.time()
+#Get the dates of incidents
+la_crimes_dates <- substr(la_crimes$date, 1, 10) %>% dates() %>% as.Date("%m/%d/%y")
+#Create new column consisting of days of week incidents took place
+la_crimes$days <- weekdays(la_crimes_dates) # vector of "Wednesday" , "Saturday", ...
+
+#Get the times, in 24-hour format, the incidents took place
+#Using strptime() per this S.O. post:
+#http://stackoverflow.com/questions/29833538/convert-12-hour-character-time-to-24-hour
+la_crimes_times <- substr(la_crimes$date, 12,22) %>% strptime("%I:%M:%S %p") %>% format(format = "%H:%M:%S") %>% times()
+#Create new column consisting of hour of day incidents took place
+la_crimes_hours <- hours(la_crimes_times)
+
+#Create a new column consisting of time period incidnts took place
+# Determine periods as follows:
+# Early Morning (before 6 AM): 0, Morning (between 6 AM and 12 PM): 1
+# Afternoon (between noon and 6 PM): 2, Evening (between 6 PM and midnight): 3
+hours_to_periods <- function(hour) {if (hour %/% 6 == 0) "early_morning" else if (hour %/% 6 == 1) "morning" else if (hour %/% 6 == 2) "afternoon" else "evening"}
+la_crimes$periods <- sapply(la_crimes_hours, hours_to_periods)
+Sys.time() - start
+```
+
+Write to file:
+```{r}
+write_csv(la_crimes, "la_crimes.csv")
+```

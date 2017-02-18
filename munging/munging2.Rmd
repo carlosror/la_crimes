@@ -1,0 +1,28 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Generates .csv file of unmapped locations
+
+Loading libraries we plan on using
+```{r}
+library(magrittr) # pipe operator
+library(readr)# read_csv(), ~3x faster than read.csv()
+```
+
+Read file:
+```{r, include=FALSE}
+start <- Sys.time()
+la_crimes <- read_csv("la_crimes.csv")
+Sys.time() - start
+```
+
+```{r}
+location_names <- la_crimes[is.na(la_crimes$latitude),]["address"] %>% table() %>% sort(decreasing = T) %>% names()
+```
+
+```{r}
+write_csv(as.data.frame(location_names), "unmapped_locations.csv")
+```
+
