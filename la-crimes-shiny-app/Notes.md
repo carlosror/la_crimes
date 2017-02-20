@@ -39,7 +39,7 @@ The following shows a result of crimes on Mondays, Wednesdays, and Fridays that 
 
 ![alt text](faceted_inputs_1.png "Faceted inputs")  ![alt text](faceted_result_1.png "Faceted results")    
 <br>
-The same crime set, now faceted by time of day
+The same set of results, now faceted by time of day
 
 ![alt text](faceted_inputs_2.png "Faceted inputs")  ![alt text](faceted_result_2.png "Faceted results")
 

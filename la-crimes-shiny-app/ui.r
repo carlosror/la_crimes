@@ -10,7 +10,7 @@ crimes_vector <- c("AGGRAVATED ASSAULT" = "AGGRAVATED ASSAULT", "ARSON" = "ARSON
                   "NON-AGGRAVATED ASSAULTS" = "NON-AGGRAVATED ASSAULTS", "OFFENSES AGAINST FAMILY" = "OFFENSES AGAINST FAMILY", "RECEIVING STOLEN PROPERTY" = "RECEIVING STOLEN PROPERTY",
                   "ROBBERY" = "ROBBERY", "SEX OFFENSES FELONIES" = "SEX OFFENSES FELONIES", "VANDALISM" = "VANDALISM", "VEHICLE / BOATING LAWS" = "VEHICLE / BOATING LAWS", 
                   "WARRANTS" = "WARRANTS", "WEAPON LAWS" = "WEAPON LAWS")
-crimes_checked <- c("AGGRAVATED ASSAULT", "BURGLARY", "CRIMINAL HOMICIDE", "DRUNK / ALCOHOL / DRUGS", "FELONIES MISCELLANEOUS", "FORCIBLE RAPE", "GRAND THEFT AUTO",
+crimes_checked <- c("AGGRAVATED ASSAULT", "BURGLARY", "CRIMINAL HOMICIDE", "DISORDERLY CONDUCT", "DRUNK / ALCOHOL / DRUGS", "FELONIES MISCELLANEOUS", "FORCIBLE RAPE", "GRAND THEFT AUTO",
                     "LARCENY THEFT", "MISDEMEANORS MISCELLANEOUS", "NARCOTICS", "NON-AGGRAVATED ASSAULTS", "RECEIVING STOLEN PROPERTY", "ROBBERY", "SEX OFFENSES FELONIES",
                     "VANDALISM", "WARRANTS", "WEAPON LAWS")
 days_vector <- c("Sunday" = "Sunday", "Monday" = "Monday", "Tuesday" = "Tuesday", "Wednesday" = "Wednesday", "Thursday" = "Thursday", "Friday" = "Friday", "Saturday" = "Saturday")
@@ -25,7 +25,8 @@ locations_vector <- c("Pershing Square, Los Angeles, CA", "Los Angeles Union Sta
                      "USC, Los Angeles, CA", "UCLA, Los Angeles, CA", "Rosemead, CA", "San Gabriel, CA",
                      "Pasadena, CA", "Norwalk, CA", "El Monte, CA", "West Covina, CA", "Beverly Hills, CA",
                      "West Hollywood, CA", "Hollywood, CA", "California State University Dominguez Hills", "Carson, CA",
-                     "Lawndale, CA", "La Mirada, CA", "Cerritos, CA", "Artesia, CA", "Bellflower, CA", "South Los Angeles, Los Angeles, CA")
+                     "Lawndale, CA", "La Mirada, CA", "Cerritos, CA", "Artesia, CA", "Bellflower, CA", "South Los Angeles, Los Angeles, CA",
+                     "Dodger Stadium, Los Angeles")
 
 shinyUI(fluidPage(
   titlePanel(h3("Los Angeles Crime Map"), windowTitle = "Los Angeles Crime Map"),

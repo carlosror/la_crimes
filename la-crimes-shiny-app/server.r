@@ -141,10 +141,10 @@ shinyServer(function(input, output, session) {
         relevant_data <- filter_data()
         
         # Use some of the columns as markers for the leaflet() function
-        relevant_data_markers <- relevant_data[c("date", "longitude", "latitude", "description", "address")]
+        relevant_data_markers <- relevant_data[c("date", "longitude", "latitude", "description", "address", "categories")]
         zoom_value <- isolate(if (input$radius == 0.5) 15 else if (input$radius <= 1.5) 14 else 13) # set map zoom based on user-selected radius
         # Generate map
-        leaflet(data = relevant_data_markers) %>% addTiles() %>% addMarkers(~longitude, ~latitude, popup=~paste("<b style='color:DarkRed;'>Location:</b>", address, "<b style='color:DarkRed;'>Event:</b>", description, "<b style='color:DarkRed;'>Date & Time:</b>", date, sep = "<br/>"), clusterOptions = markerClusterOptions()) %>% setView(location[1], location[2], zoom=zoom_value) %>% addCircles(lng = location[1], lat =location[2], radius = isolate(input$radius) * 1609.34)
+        leaflet(data = relevant_data_markers) %>% addTiles() %>% addMarkers(~longitude, ~latitude, popup=~paste("<b style='color:DarkRed;'>Location:</b>", address, "<b style='color:DarkRed;'>Crime:</b>", categories, "<b style='color:DarkRed;'>Description:</b>", description, "<b style='color:DarkRed;'>Date & Time:</b>", date, sep = "<br/>"), clusterOptions = markerClusterOptions()) %>% setView(location[1], location[2], zoom=zoom_value) %>% addCircles(lng = location[1], lat =location[2], radius = isolate(input$radius) * 1609.34)
     })
     
     output$DataTable <- renderDataTable({
@@ -176,7 +176,7 @@ shinyServer(function(input, output, session) {
         categories_top <- names(categories_table_sorted)
         relevant_data <- subset(relevant_data, categories %in% categories_top[1:6])
                      
-        crime_barplot <- ggplot(data = relevant_data) + ggtitle(paste("Police calls around", isolate(input$address), "in", isolate(input$year))) # basic plot + title
+        crime_barplot <- ggplot(data = relevant_data) + ggtitle(paste("Crimes reported around", isolate(input$address), "in", isolate(input$year))) # basic plot + title
         # Arrange variables in the barplot according to user-selected facets
         # http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/ 
         # http://www.sthda.com/english/wiki/ggplot2-legend-easy-steps-to-change-the-position-and-the-appearance-of-a-graph-legend-in-r-software

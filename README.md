@@ -4,7 +4,7 @@ https://carlosgg.shinyapps.io/la-crimes-map/
 ### Motivation
 
 I wanted an equivalent of [this Hillsborough County website](http://gis.hcso.tampa.fl.us/PublicGIS/CrimeMapping/), i.e., 
-I wanted to be able to enter an O.C. address or landmark and get a plot of criminal activity within a given radius of that address/landmark.
+I wanted to be able to enter an L.A. county address or landmark and get a plot of criminal activity within a given radius of that address/landmark.
 
 ### Technologies
 
@@ -70,7 +70,7 @@ The following shows a result of crimes on Mondays, Wednesdays, and Fridays that 
 
 ![alt text](faceted_inputs_1.PNG "Faceted inputs")  ![alt text](faceted_result_1.PNG "Faceted results")    
 <br>
-The same crime set, now faceted by time of day
+The same set of results, now faceted by time of day
 
 ![alt text](faceted_inputs_2.PNG "Faceted inputs")  ![alt text](faceted_result_2.PNG "Faceted results")
 
