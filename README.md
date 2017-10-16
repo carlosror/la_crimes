@@ -1,4 +1,4 @@
-###URL
+### URL
 https://carlosgg.shinyapps.io/la-crimes-map/
 
 ### Motivation
@@ -10,7 +10,7 @@ I wanted to be able to enter an L.A. county address or landmark and get a plot o
 
 [R](https://leanpub.com/rprogramming), [R Studio](https://www.rstudio.com/), [Shiny R server](http://shiny.rstudio.com/articles/), [Leaflet for R](http://rstudio.github.io/leaflet/), [ggmap](https://journal.r-project.org/archive/2013-1/kahle-wickham.pdf).
 
-###Data source
+### Data source
 
 The crime data was obtained from the [LA County Open Data website](https://data.lacounty.gov/Criminal/LA-SHERIFF-CRIMES-FROM-2004-TO-2015/3dxh-c6jw)
 
